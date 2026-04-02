@@ -1,9 +1,34 @@
-A Retrieval Augmented Generation Chatbot which allows the user to upload their PDF File , and then the RAG pipeline does text extraction followed by text normalization to tokenization i.e 
-converts to token ID's. 
+# Retrieval-Augmented Generation (RAG) Chatbot
 
-The chunking size is 300 allowed with an overlap of 50 , followed by chunking we implement an OPENAI's embedding model which will convert the generated chunks to vectors and 
-store the vectors in the vectorDB.
+This project implements a Retrieval-Augmented Generation (RAG) chatbot that allows users to upload PDF documents and query their contents interactively.
 
-The vectorDB used here is ChromaDB which is a free , open-source DB which can be used for storage of vectors and the LLM used here OPENAI's is gpt-4o-mini.
+## Overview
 
-After retrieval of the chunks , the RAG Pipeline will augment a prompt towards the LLM and the LLM seeing the prompt given will generate an answer towards the user.
+The system processes uploaded PDFs through the following pipeline:
+
+### 1. Text Extraction
+The uploaded PDF is parsed to extract raw textual content.
+
+### 2. Text Normalization & Tokenization
+The extracted text is cleaned and normalized, then converted into token IDs for processing.
+
+### 3. Chunking Strategy
+The text is divided into smaller chunks:
+- **Chunk size:** 300 tokens  
+- **Overlap:** 50 tokens  
+
+This overlap helps maintain context between chunks.
+
+### 4. Embedding Generation
+Each chunk is converted into vector embeddings using OpenAI’s embedding model.
+
+### 5. Vector Storage (ChromaDB)
+The embeddings are stored in **ChromaDB**, an open-source vector database optimized for similarity search.
+
+### 6. Retrieval & Augmentation
+When a user submits a query:
+- Relevant chunks are retrieved from ChromaDB
+- These chunks are used to augment the prompt
+
+### 7. Response Generation
+The augmented prompt is passed to **gpt-4o-mini**, which generates a context-aware response.
